@@ -15,7 +15,8 @@ SET e.title = ev.title,
     e.date = ev.date,
     e.location = ev.location,
     e.confidence = ev.confidence,
-    e.embedding = ev.embedding
+    e.embedding = ev.embedding,
+    e.corroboration_count = coalesce(e.corroboration_count, 1)
 MERGE (src:Source {url: ev.source_url})
 SET src.domain = ev.domain
 MERGE (e)-[:REPORTED_BY]->(src)
