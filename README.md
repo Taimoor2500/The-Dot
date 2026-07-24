@@ -4,7 +4,7 @@
 
 An AI-powered pipeline that ingests world news, extracts structured events into a
 knowledge graph, and (in later phases) answers multi-hop questions about how events
-connect — causes, responses, storylines — with full source provenance on every fact.
+connect  causes, responses, storylines — with full source provenance on every fact.
 
 **Domain scope for v1:** geopolitics & trade, rolling ~60-day window. Narrow on purpose:
 a small, accurate, well-sourced graph beats a large noisy one.
