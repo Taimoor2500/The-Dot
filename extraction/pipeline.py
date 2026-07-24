@@ -2,6 +2,7 @@
 
 import logging
 
+import httpx
 from google.genai.errors import APIError
 
 from extraction.llm import ExtractionError, QuotaExhaustedError, embed_text, extract_event
@@ -46,6 +47,10 @@ def extract_with_retry(
             # errors, etc.) that aren't schema validation errors but should
             # still be retried and logged rather than crashing the run.
             last_error = ExtractionError(str(e), raw_response=None)
+        except (httpx.TimeoutException, httpx.ConnectError) as e:
+            # google-genai's default retry_options is None (no SDK-level retry,
+            # reraise=True), so these come straight through uncaught otherwise.
+            last_error = ExtractionError(f"network error: {e}", raw_response=None)
 
         logger.warning(
             "extraction attempt %d/%d failed for %s: %s",
